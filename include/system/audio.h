@@ -170,7 +170,7 @@ typedef enum {
  * It can also be used for certain formats to give informations not present in
  * the encoded audio stream (e.g. octet alignement for AMR).
  */
-typedef enum {
+enum {
     AUDIO_FORMAT_INVALID             = 0xFFFFFFFFUL,
     AUDIO_FORMAT_DEFAULT             = 0,
     AUDIO_FORMAT_PCM                 = 0x00000000UL, /* DO NOT CHANGE */
@@ -225,7 +225,9 @@ typedef enum {
                                         AUDIO_FORMAT_PCM_SUB_16_BIT),
     AUDIO_FORMAT_PCM_24_BIT_OFFLOAD  = (AUDIO_FORMAT_PCM_OFFLOAD |
                                         AUDIO_FORMAT_PCM_SUB_8_24_BIT),
-} audio_format_t;
+};
+
+typedef uint32_t audio_format_t;
 
 enum {
     /* output channels */
@@ -605,6 +607,15 @@ typedef struct {
 static const audio_offload_info_t AUDIO_INFO_INITIALIZER = {
     version: AUDIO_OFFLOAD_INFO_VERSION_CURRENT,
     size: sizeof(audio_offload_info_t),
+    sample_rate: 0,
+    channel_mask: 0,
+    format: AUDIO_FORMAT_INVALID,
+    stream_type: AUDIO_STREAM_DEFAULT,
+    bit_rate: 0,
+    duration_us: 0,
+    has_video: 0,
+    is_streaming: 0,
+    bit_width: 0
 };
 
 static inline bool audio_is_output_device(audio_devices_t device)
@@ -659,7 +670,7 @@ static inline bool audio_is_bluetooth_sco_device(audio_devices_t device)
 {
     device &= ~AUDIO_DEVICE_BIT_IN;
     if ((popcount(device) == 1) && (device & (AUDIO_DEVICE_OUT_ALL_SCO |
-                   AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET)))
+            AUDIO_DEVICE_IN_BLUETOOTH_SCO_HEADSET)))
         return true;
     else
         return false;
@@ -675,8 +686,9 @@ static inline bool audio_is_usb_device(audio_devices_t device)
 
 static inline bool audio_is_remote_submix_device(audio_devices_t device)
 {
-    if ((device & AUDIO_DEVICE_BIT_IN | device & AUDIO_DEVICE_OUT_REMOTE_SUBMIX) == AUDIO_DEVICE_OUT_REMOTE_SUBMIX
-            || (device & AUDIO_DEVICE_IN_REMOTE_SUBMIX) == AUDIO_DEVICE_IN_REMOTE_SUBMIX)
+    device &= ~AUDIO_DEVICE_BIT_IN;
+    if ((popcount(device) == 1) && (device & (AUDIO_DEVICE_OUT_REMOTE_SUBMIX |
+            AUDIO_DEVICE_IN_REMOTE_SUBMIX)))
         return true;
     else
         return false;

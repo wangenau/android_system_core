@@ -25,7 +25,6 @@ hostSmpFlag := -DANDROID_SMP=0
 
 commonSources := \
 	hashmap.c \
-	atomic.c.arm \
 	native_handle.c \
 	socket_inaddr_any_server.c \
 	socket_local_client.c \
@@ -46,10 +45,11 @@ commonSources := \
 	threads.c \
 	sched_policy.c \
 	iosched_policy.c \
-	str_parms.c \
+	str_parms.c
 
 commonHostSources := \
-        ashmem-host.c
+	ashmem-host.c \
+	atomic.c
 
 # some files must not be compiled when building against Mingw
 # they correspond to features not used by our host development tools

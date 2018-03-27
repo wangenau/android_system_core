@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#define ANDROID_ATOMIC_INLINE
+
 #include <errno.h>
 #include <fcntl.h>
 #include <limits.h>
@@ -22,7 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <cutils/atomic.h>
+#include <cutils/atomic-inline.h>
 #include <cutils/compiler.h>
 #include <cutils/properties.h>
 #include <cutils/trace.h>

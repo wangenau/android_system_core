@@ -424,7 +424,7 @@ static bool execute_personality_routine(const memory_t* memory,
                 return false;
             }
             set_reg(state, R_SP, state->gregs[R_SP] + (uint32_t)(op2 & 0x0f) * 8 + 8);
-        } else if ((op == 0xf8) == 0xd0) {
+        } else if ((op & 0xf8) == 0xd0) {
             // "Pop VFP double-precision registers D[8]-D[8+nnn] saved (as if) by FSTMFDD"
             set_reg(state, R_SP, state->gregs[R_SP] + (uint32_t)(op & 0x07) * 8 + 8);
         } else {
