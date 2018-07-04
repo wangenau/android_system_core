@@ -71,6 +71,7 @@ LOCAL_STATIC_LIBRARIES := liblog
 LOCAL_CFLAGS += $(host_commonCflags)
 LOCAL_LDLIBS += $(host_commonLdlibs)
 LOCAL_C_INCLUDES += external/safe-iop/include
+LOCAL_CFLAGS := -O3
 include $(BUILD_HOST_STATIC_LIBRARY)
 
 
@@ -124,6 +125,7 @@ LOCAL_SHARED_LIBRARIES := \
 
 LOCAL_MODULE:= libutils
 LOCAL_C_INCLUDES += external/safe-iop/include
+LOCAL_CFLAGS := -O3
 include $(BUILD_STATIC_LIBRARY)
 
 # For the device, shared
@@ -137,6 +139,7 @@ LOCAL_SHARED_LIBRARIES := \
         libdl \
         libcorkscrew
 LOCAL_C_INCLUDES += external/safe-iop/include
+LOCAL_CFLAGS := -O3
 
 include $(BUILD_SHARED_LIBRARY)
 
